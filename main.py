@@ -9,14 +9,13 @@ driver.get(url=url)
 
 upcoming_event = {}
 for i in range(5):
-    event_time = driver.find_elements(By.XPATH, f"//*[@id='content']/div/section/div[3]/div[2]/div/ul/li[{i+1}]/time")
-    event_title = driver.find_elements(By.XPATH, f"//*[@id='content']/div/section/div[3]/div[2]/div/ul/li[{i+1}]/a")
+    event_time = driver.find_element(By.XPATH, f"//*[@id='content']/div/section/div[3]/div[2]/div/ul/li[{i+1}]/time")
+    event_title = driver.find_element(By.XPATH, f"//*[@id='content']/div/section/div[3]/div[2]/div/ul/li[{i+1}]/a")
     upcoming_event[i] = {
-        "time": event_time[0].text,
-        "name": event_title[0].text,
+        "time": event_time.text,
+        "name": event_title.text,
     }
 print(upcoming_event)
-
 
 driver.close()
 driver.quit()
