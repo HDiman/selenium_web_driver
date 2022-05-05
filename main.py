@@ -1,42 +1,22 @@
 from selenium import webdriver
-import time
+from selenium.webdriver.common.by import By
 
-url = "http://www.google.com/"
+url = "https://www.python.org/"
+
 chrome_driver_path = "/Users/dsannikov/Documents/GitHub/ParsingPages/selenium_web_driver/driver/chromedriver"
 driver = webdriver.Chrome(executable_path=chrome_driver_path)
+driver.get(url=url)
 
-try:
-    driver.get(url=url)
-    time.sleep(5)
-except Exception as ex:
-    print(ex)
-finally:
-    driver.close()
-    driver.quit()
-
-
-
-
+upcoming_event = {}
+for i in range(5):
+    event_time = driver.find_elements(By.XPATH, f"//*[@id='content']/div/section/div[3]/div[2]/div/ul/li[{i+1}]/time")
+    event_title = driver.find_elements(By.XPATH, f"//*[@id='content']/div/section/div[3]/div[2]/div/ul/li[{i+1}]/a")
+    upcoming_event[i] = {
+        "time": event_time[0].text,
+        "name": event_title[0].text,
+    }
+print(upcoming_event)
 
 
-# driver.get("https://www.billboard.com/charts/hot-100/")
-
-# import time
-# from selenium import webdriver
-#
-# chrome_driver_path = "/Users/dsannikov/Documents/GitHub/ParsingPages/selenium_web_driver/driver/chromedriver"
-# driver = webdriver.Chrome(executable_path=chrome_driver_path)  # Optional argument, if not specified will search path.
-#
-# driver.get('http://www.google.com/')
-
-# time.sleep(5) # Let the user actually see something!
-#
-# search_box = driver.find_element_by_name('q')
-#
-# search_box.send_keys('ChromeDriver')
-#
-# search_box.submit()
-#
-# time.sleep(5) # Let the user actually see something!
-#
-# driver.quit()
+driver.close()
+driver.quit()
